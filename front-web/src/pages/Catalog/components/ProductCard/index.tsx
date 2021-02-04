@@ -1,5 +1,7 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { ReactComponent as ProductImage } from '../../../../core/assets/images/product.svg';
+import ProductPrice from '../../../../core/components/ProductPrice';
 import './styles.scss';
 
 const ProductCard = () => (
@@ -10,12 +12,7 @@ const ProductCard = () => (
             <h6 className="product-name">
                 Computador Desktop - Inter core i7
             </h6>
-            <div className="product-price-container">
-                <span className="product-currency">R$</span>
-                <h3 className="product-price">
-                    2.779,00
-                </h3>
-            </div>
+            <ProductPrice price="2.779,00"/>
         </div>
     </div>
 );
