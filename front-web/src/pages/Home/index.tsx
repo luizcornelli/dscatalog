@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ReactComponent as MainImage} from '../../core/assets/images/main-image.svg';
-import ButtomIcon from '../../core/components/ButtomIcon';
+import { ReactComponent as MainImage} from 'core/assets/images/main-image.svg';
+import ButtomIcon from 'core/components/ButtomIcon';
 import './styles.scss';
 
 const Home = () => (

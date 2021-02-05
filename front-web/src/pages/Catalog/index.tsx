@@ -1,9 +1,10 @@
-import { makeRequest } from '../../core/utils/request';
+import { makeRequest } from 'core/utils/request';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from './components/ProductCard';
 import './styles.scss';
-import { ProductsResponse } from '../../core/types/Product';
+import { ProductsResponse } from 'core/types/Product';
+import ProductCardLoader from './components/Loaders/ProductCardLoader';
 
 const Catalog = () => {
 //quando o component iniciar buscas a lista de produtos >> 
@@ -12,7 +13,7 @@ const Catalog = () => {
 // no componente e listar os produtos dinamicamente >>
 
     const [productsResponse, setProductsResponse] = useState<ProductsResponse>();
-    console.log(productsResponse);
+    const [isLoading, setIsLoading] = useState(false);
     /*
         Limitações do fetch 
         1. Verboso
@@ -27,8 +28,14 @@ const Catalog = () => {
             linesPerPage: 10
         }
 
+       // iniciar o loader
+       setIsLoading(true);
        makeRequest({ url: '/products', params })
         .then(response => setProductsResponse(response.data))
+        .finally(() => {
+            // finalizar o loader
+            setIsLoading(false);
+        })
     }, []);
 
     return(
@@ -37,11 +44,13 @@ const Catalog = () => {
             <h1 className="catalog-title">Catálogo de Produtos</h1>
 
             <div className="catalog-products">
-                { productsResponse?.content.map(product => (
-                    <Link to={ `/products/${ product.id }` } key={ product.id }>
-                        <ProductCard product={ product }/>
-                    </Link>
-                )) }
+                { isLoading ? <ProductCardLoader /> : (
+                    productsResponse?.content.map(product => (
+                        <Link to={ `/products/${ product.id }` } key={ product.id }>
+                            <ProductCard product={ product }/>
+                        </Link>
+                    ))
+                )}
             </div>
         </div>
     );
